@@ -8,10 +8,7 @@ def distance_2points(point1,point2):
     '''
     return the distance between two points
     where point[3]
-    '''
-    point1 = [float(pt) for pt in point1]
-    point2 = [float(pt) for pt in point2]
-    
+    '''    
     return(math.sqrt((point2[0]-point1[0])**2+
                      (point2[1]-point1[1])**2+
                      (point2[2]-point1[2])**2))
@@ -24,3 +21,26 @@ def area_triangle(point1,point2,point3):
     len_c = distance_2points(point3,point1)
     semi_perimeter = (len_a+len_b+len_c)/2
     return (math.sqrt(semi_perimeter*(semi_perimeter-len_a)*(semi_perimeter-len_b)*(semi_perimeter-len_c)))
+
+def vector_scale(vector1,scale_factor):
+    ''' k[x1,x2,x3]'''
+    return[scale_factor*x for x in vector1]
+
+def vector_dot(vector1,vector2):
+
+    return(vector1[0]*vector2[0]+vector1[1]*vector2[1]+vector1[2]*vector2[2])
+
+def centroid_triangle(vector1,vector2,vector3):
+    ''' average of the vertices '''
+    return [(vector1[0]+vector2[0]+vector3[0])/3,
+            (vector1[1]+vector2[1]+vector3[1])/3,
+            (vector1[2]+vector2[2]+vector3[2])/3]
+
+def vector_mag(vector1):
+    
+    return(math.sqrt(vector1[0]**2+vector1[1]**2+vector1[2]**2))
+
+def normalize_vector(vector1):
+    
+    mag = vector_mag(vector1)
+    return [x/mag for x in vector1]

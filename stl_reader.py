@@ -25,31 +25,27 @@ def read_stl(path):
         string_list = file.readlines()
     return string_list[:-1] #skip end solid
 
-     
-if __name__ == "__main__":
-    string_list = read_stl("Input/sphere1 2.stl")
-    data = []
-    for i in string_list:
-        if "normal" in i:
-            data.append([float(x) for x in i.strip().split(' ')[2:]])
-        elif " vertex" in i:
-            data.append([float(x) for x in i.strip().split(' ')[1:]])
-    
-    """ 
-    [n,v,v,v,n,v,v,v]
-    [0,1,2,3,4,5,6,7,8,9]
-    volume = n*ds
-    """  
+
+def calculate_area_and_volume(path : str)->tuple:
     surface_area = 0.0
     del_area = 0.0
     volume = 0.0
     del_volume = 0.0
+    data = []
+    string_list = read_stl(path)
+    for i in string_list:
+        if "normal" in i or "vertex" in i:
+            data.append([float(x) for x in i.strip().split(' ')[-3:]])
     
     for i in range(1,len(data)-3,4):
         del_area = area_triangle(data[i],data[i+1],data[i+2])
         del_volume = (vector_dot(normalize_vector(data[i-1]),centroid_triangle(data[i],data[i+1],data[i+2]))*del_area)/3
         surface_area = surface_area+del_area
         volume = volume + del_volume
-
-    print("Surface Area: ", surface_area," squared unit")
+    return(surface_area,volume)
+  
+if __name__ == "__main__":
+    path = input("Enter the Stl Path\n")
+    area,volume = calculate_area_and_volume(path)
+    print("Surface Area: ", area," squared unit")
     print("Volume: ", volume," cubic unit")

@@ -1,0 +1,30 @@
+solid Part_1 COMMENT: Exported from Inspire HWVERSION_2022.1.0.12_Aug 10 2022_11:04:55 Build 13457, Altair Inc. Unit : m
+facet normal 0.75 0.433012 0.5
+    outer loop
+       vertex 173.184 -2.88292e-17 1.66445e-17
+       vertex -7.68149e-06 299.964 0
+       vertex -2.55641e-06 99.988 173.184
+    endloop
+endfacet
+facet normal -0.75 0.433012 0.5
+    outer loop
+       vertex -7.68149e-06 299.964 0
+       vertex -173.184 -2.88292e-17 1.66445e-17
+       vertex -2.55641e-06 99.988 173.184
+    endloop
+endfacet
+facet normal 0 -0.866025 0.500001
+    outer loop
+       vertex 173.184 -2.88292e-17 1.66445e-17
+       vertex -2.55641e-06 99.988 173.184
+       vertex -173.184 -2.88292e-17 1.66445e-17
+    endloop
+endfacet
+facet normal 0 -5.54883e-20 -1
+    outer loop
+       vertex -7.68149e-06 299.964 0
+       vertex 173.184 -2.88292e-17 1.66445e-17
+       vertex -173.184 -2.88292e-17 1.66445e-17
+    endloop
+endfacet
+endsolid 

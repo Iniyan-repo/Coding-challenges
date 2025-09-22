@@ -1,4 +1,6 @@
 '''
+Author: Iniyan
+date: sept-22-2025
 returns average of n number of values * is unpacking operator
 '''
 def average(*args):

@@ -3,7 +3,7 @@ Author: Iniyan
 purpose: seperate helper functions
 '''
 import math
-
+import time
 def distance_2points(point1,point2):
     '''
     return the distance between two points
@@ -44,3 +44,22 @@ def normalize_vector(vector1):
     
     mag = vector_mag(vector1)
     return [x/mag for x in vector1]
+
+
+def timeit(functionptr):
+    def inner_func(*vals,**keyvals):
+        start = time.time()
+        func = functionptr(*vals,**keyvals)
+        end = time.time()
+        print("Executed",functionptr.__name__,"in "+ str(end-start) + " seconds.")
+        return func
+    return inner_func
+
+
+def hail(functionptr):
+    def inner_func(*vals,**keyvals):
+        print(f"Function {functionptr.__name__} Started!")
+        func = functionptr(*vals,**keyvals)
+        print(f"Function {functionptr.__name__} Ended!")
+        return func
+    return inner_func

@@ -4,6 +4,12 @@ purpose: seperate helper functions
 '''
 import math
 import time
+
+def average(*args):
+    if(len(args)==0):
+        return 0
+    return(sum(*args)/len(*args))
+
 def distance_2points(point1,point2):
     '''
     return the distance between two points
@@ -13,14 +19,27 @@ def distance_2points(point1,point2):
                      (point2[1]-point1[1])**2+
                      (point2[2]-point1[2])**2))
 
+def mid_2points(point1,point2):
+    #(X1,X2),(Y1,Y2),(Z1,Z2)
+    return [average(x) for x in map(point1,point2)]
+
+def split_triangle_1to4(point1,point2,point3):
+    
+    mid_a = mid_2points(point1,point2)
+    mid_b = mid_2points(point1,point3)
+    mid_c = mid_2points(point3,point2)
+    
+    return[[point1,mid_a,mid_b],[point2,mid_a,mid_c],[point3,mid_c,mid_b],[mid_a,mid_b,mid_c]]
+    
 
 def area_triangle(point1,point2,point3):
-    ''' compute area using heron's formula'''   
+    ''' compute area using heron's formula'''  
+    orient = detr_3(point1,point2,point3) 
     len_a = distance_2points(point1,point2)
     len_b = distance_2points(point2,point3)
     len_c = distance_2points(point3,point1)
     semi_perimeter = (len_a+len_b+len_c)/2
-    return (math.sqrt(semi_perimeter*(semi_perimeter-len_a)*(semi_perimeter-len_b)*(semi_perimeter-len_c)))
+    return (orient * math.sqrt(semi_perimeter*(semi_perimeter-len_a)*(semi_perimeter-len_b)*(semi_perimeter-len_c)))
 
 def vector_scale(vector1,scale_factor):
     ''' k[x1,x2,x3]'''
@@ -63,3 +82,11 @@ def hail(functionptr):
         print(f"Function {functionptr.__name__} Ended!")
         return func
     return inner_func
+
+def vector_add(v1,v2):
+    return[ i+j for i,j in zip(v1,v2)]
+
+def vector_2point(p1,p2):
+    '''first,second -> second-first'''
+    return[ j-i for i,j in zip(p1,p2)]
+    

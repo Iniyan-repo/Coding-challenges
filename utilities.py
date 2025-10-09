@@ -34,12 +34,11 @@ def split_triangle_1to4(point1,point2,point3):
 
 def area_triangle(point1,point2,point3):
     ''' compute area using heron's formula'''  
-    orient = detr_3(point1,point2,point3) 
     len_a = distance_2points(point1,point2)
     len_b = distance_2points(point2,point3)
     len_c = distance_2points(point3,point1)
     semi_perimeter = (len_a+len_b+len_c)/2
-    return (orient * math.sqrt(semi_perimeter*(semi_perimeter-len_a)*(semi_perimeter-len_b)*(semi_perimeter-len_c)))
+    return (math.sqrt(semi_perimeter*(semi_perimeter-len_a)*(semi_perimeter-len_b)*(semi_perimeter-len_c)))
 
 def vector_scale(vector1,scale_factor):
     ''' k[x1,x2,x3]'''
@@ -48,6 +47,12 @@ def vector_scale(vector1,scale_factor):
 def vector_dot(vector1,vector2):
 
     return(vector1[0]*vector2[0]+vector1[1]*vector2[1]+vector1[2]*vector2[2])
+
+def vector_cross(vector_1,vector_2):
+    i = vector_1[1]*vector_2[2] - vector_1[2]*vector_2[1]
+    j = vector_1[2]*vector_2[0] - vector_1[0]*vector_2[2]
+    k = vector_1[0]*vector_2[1] - vector_1[1]*vector_2[0]
+    return [i,j,k]
 
 def centroid_triangle(vector1,vector2,vector3):
     ''' average of the vertices '''

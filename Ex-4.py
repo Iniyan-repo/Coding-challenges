@@ -4,7 +4,7 @@ Exercise problems on generators
 '''
 import random
 import csv
-from utilities import area_triangle,vector_scale,vector_add,vector_2point,distance_2points
+from utilities import *
   
 def myRange(start,stop = None,step=1):
     # copy of range function
@@ -42,17 +42,37 @@ def triagen(v1=[],v2=[],v3=[]):
         
         rel_pt = vector_add(vector_scale(X,alpha),vector_scale(Y,beta))
         yield vector_add(v1,rel_pt)
-        
-    
-def quadgen((v1=[],v2=[],v3=[],v4=[]):
+
+def quadgen(*points):
     ''' given points of a quad in a cyclic manner uses triagen to create interior points '''
-    tri1 = triagen(v1, v2, v3)  
-    tri2 = triagen(v1, v4, v3)  
-    while True:
-        if random.random() > 0.5:
-            yield next(tri1)
+    sign = []
+    '''check if there is any concave vertex in the polygon by finding the orientation'''
+    for i in range(4):
+        va = vector_2point(points[i],points[i-1])
+        vb = vector_2point(points[i],points[(i+1)%4])
+        vx = vector_cross(va,vb)
+        sign.append(vx[2]/abs(vx[2]) if vx[2]!=0 else 1)
+
+    if(len(set(sign))>1):
+        #concave vertex , find the concave vertex and split tria with it as one of diagonal 
+        indicator = sum(sign)
+        if(indicator > 0):
+            vtx = sign.index(-1)
         else:
-            yield next(tri2)
+            vtx = sign.index(1)
+        opp = (vtx +2) % 4
+        tria1 = triagen(points[vtx],points[opp],points[(opp+1)%4])
+        tria2 = triagen(points[vtx],points[opp],points[(opp-1)%4])
+        
+    else:
+        #general case
+        tria1 = triagen(points[0],points[1],points[2])
+        tria2 = triagen(points[0],points[2],points[3])
+        
+    while True:
+        yield next(tria1)
+        yield next(tria2)
+
         
 if('__main__' == __name__) : 
      
@@ -66,10 +86,11 @@ if('__main__' == __name__) :
             writer.writerow(point)  
           
        
-    b_quad = quadgen([0,0,0],[0,-1,0],[1,1,0],[-1,0,0])
+    #b_quad = quadgen([0,0,0],[1,0,0],[1,1,0],[0,1,0])
+    b_quad = quadgen([0.2,0,0],[0,-1,0],[1,1,0],[-1,0,0])
     with open('quad.csv', 'w', newline="") as file:
         writer = csv.writer(file, delimiter=',')
-        for _ in range(1000):   
+        for _ in range(10000):   
             point = next(b_quad)
             writer.writerow(point)  
           
